@@ -119,13 +119,16 @@
     <h3>Salidas confirmadas <span id="countSal" class="h3-count">0</span></h3>
     <div class="body table-wrap">
       <table id="tblSal">
-        <thead>
-          <tr>
-            <!-- A la derecha de Patente: Vuelta, Tipo, Equipo, Transporte -->
-            <th>HR</th><th>Patente</th><th>Vuelta</th><th>Tipo</th><th>Equipo</th><th>Transporte</th>
-            <th>Ingreso</th><th>Inicio de carga</th><th>Fin de carga</th><th>Salida</th>
-          </tr>
-        </thead>
+  <thead>
+    <tr>
+      <th>HR</th>
+      <th>Patente</th>
+      <th>Estado HR</th><!-- NUEVA -->
+      <th>Vuelta</th><th>Tipo</th><th>Equipo</th><th>Transporte</th>
+      <th>Ingreso</th><th>Inicio de carga</th><th>Fin de carga</th><th>Salida</th>
+    </tr>
+  </thead>
+
         <tbody></tbody>
       </table>
     </div>
@@ -243,24 +246,25 @@
     document.getElementById('countSal').textContent = rows.length;
     const movs = Array.isArray(data.salidas_movs)?data.salidas_movs:[];
     const evByHr = buildSalidaEventIndex(movs);
-    document.querySelector('#tblSal tbody').innerHTML =
-      rows.map(r=>{
-        const hr = String(r.hr||'').trim();
-        const ev = evByHr[hr] || {};
-        return `<tr>
-          <td>${r.hr||''}</td>
-          <td>${r.patente||''}</td>
-          <td>${r.vuelta||''}</td>
-          <td>${r.tipo_viaje||''}</td>
-          <td>${r.tipo_equipo||''}</td>
-          <td>${r.empresa||''}</td>
-          <td>${r.ingreso||''}</td>
-          <td>${ev['Inicio de Carga']||''}</td>
-          <td>${ev['Fin de Carga']||''}</td>
-          <td>${ev['SALIDA']||''}</td>
-        </tr>`;
-      }).join('') || `<tr><td colspan="10" class="muted">Sin datos</td></tr>`;
-  }
+document.querySelector('#tblSal tbody').innerHTML =
+  rows.map(r=>{
+    const hr = String(r.hr||'').trim();
+    const ev = evByHr[hr] || {};
+    return `<tr>
+      <td>${r.hr||''}</td>
+      <td>${r.patente||''}</td>
+      <td>${r.estado_hr||''}</td> <!-- NUEVA -->
+      <td>${r.vuelta||''}</td>
+      <td>${r.tipo_viaje||''}</td>
+      <td>${r.tipo_equipo||''}</td>
+      <td>${r.empresa||''}</td>
+      <td>${r.ingreso||''}</td>
+      <td>${ev['Inicio de Carga']||''}</td>
+      <td>${ev['Fin de Carga']||''}</td>
+      <td>${ev['SALIDA']||''}</td>
+    </tr>`;
+  }).join('') || `<tr><td colspan="11" class="muted">Sin datos</td></tr>`;
+
 
   // Indexa última hora de cada evento por HR (Inicio/Fin/SALIDA)
   function buildSalidaEventIndex(movs){
