@@ -1,0 +1,253 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Playa & Cargas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{
+      --card-bg:#fff; --card-b:#e8eaef; --muted:#8a94a6; --ink:#334155;
+      --chip:#f2f4f8;
+    }
+    *{box-sizing:border-box}
+    body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;margin:16px;background:#f7f8fa;color:var(--ink)}
+    .header{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .grow{flex:1}
+    button{background:#0ea5e9;border:0;color:#fff;border-radius:8px;padding:8px 12px;font-weight:600;cursor:pointer}
+    button:disabled{opacity:.5;cursor:not-allowed}
+    label{font-size:14px}
+    .muted{color:var(--muted)}
+
+    /* ---- layout ---- */
+    .two-col{
+      display:grid;
+      grid-template-columns: 1.2fr 2fr;
+      gap:16px;
+      margin-top:16px;
+      margin-bottom:16px;
+      align-items:start;
+    }
+    @media (max-width: 1100px){
+      .two-col{ grid-template-columns: 1fr; }
+    }
+
+    .card{background:var(--card-bg);border:1px solid var(--card-b);border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+    .card h3{margin:0;padding:12px 14px;border-bottom:1px solid #eef0f3;font-size:18px}
+    .card .body{padding:10px 12px}
+
+    /* tablas responsivas */
+    .table-wrap{overflow-x:auto}
+    table{width:100%;border-collapse:collapse;font-size:14px;min-width:720px}
+    th,td{padding:10px;border-bottom:1px solid #eef0f3;text-align:left;white-space:nowrap}
+    th{background:#f9fafc;font-weight:600;color:var(--ink)}
+
+    /* dársenas como columnas */
+    .docks-grid{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(210px,1fr));
+      gap:12px;
+    }
+    @media (max-width: 1280px){ .docks-grid{ grid-template-columns: repeat(3, minmax(200px,1fr)); } }
+    @media (max-width: 980px){ .docks-grid{ grid-template-columns: repeat(2, minmax(200px,1fr)); } }
+    @media (max-width: 640px){ .docks-grid{ grid-template-columns: 1fr; } }
+
+    .dock-col{background:#fff;border:1px solid var(--card-b);border-radius:10px}
+    .dock-col h4{margin:0;padding:10px 12px;border-bottom:1px solid #eef0f3;font-size:14px}
+    .dock-col .list{padding:8px 10px;min-height:64px}
+    .chip{display:flex;gap:6px;align-items:center;background:var(--chip);border-radius:999px;padding:4px 8px;font-size:12px;margin:6px 0;flex-wrap:wrap}
+    .chip b{font-weight:700}
+    .chip .sep{opacity:.5}
+
+    .pill{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px}
+    .pill.ok{background:#e8f7ee;color:#16794f}
+    .pill.warn{background:#fff7e6;color:#915930}
+    .pill.late{background:#fdeaea;color:#a4132d}
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2 style="margin:0">Playa & Cargas</h2>
+    <div id="last" class="muted">Cargando…</div>
+    <div class="grow"></div>
+    <button id="btn">Actualizar</button>
+    <label><input type="checkbox" id="auto"> Auto-refresh 60s</label>
+  </div>
+
+  <!-- fila principal: izquierda ingresos, derecha dársenas -->
+  <div class="two-col">
+    <div class="card">
+      <h3>Ingresos esperados</h3>
+      <div class="body table-wrap">
+        <table id="tblIng">
+          <thead>
+            <!-- columnas: HR, Patente, Turno, Estado, Vuelta, Tipo, Equipo -->
+            <tr>
+              <th>HR</th><th>Patente</th><th>Turno</th><th>Estado</th>
+              <th>Vuelta</th><th>Tipo</th><th>Equipo</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>En planta por dársena</h3>
+      <div class="body">
+        <div id="docks" class="docks-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- abajo: salidas a lo ancho -->
+  <div class="card">
+    <h3>Salidas confirmadas</h3>
+    <div class="body table-wrap">
+      <table id="tblSal">
+        <thead>
+          <tr>
+            <!-- A la derecha de Patente: Vuelta, Tipo, Equipo, Transporte -->
+            <th>HR</th><th>Patente</th><th>Vuelta</th><th>Tipo</th><th>Equipo</th><th>Transporte</th>
+            <th>Ingreso</th><th>Inicio de carga</th><th>Fin de carga</th><th>Salida</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+<script>
+  // URL del último JSON guardado (Drive → WebApp)
+  const JSON_URL = 'https://script.google.com/macros/s/AKfycbyu9RsRRkwOqDFCgzQw8rTOWEAwNK7rI7ETuOgLTLWEgrYJ3LmaGwpk-WcqvJMVbBvi/exec';
+
+  let timer=null;
+  document.getElementById('btn').onclick = loadData;
+  document.getElementById('auto').onchange = e=>{
+    if(e.target.checked){ timer=setInterval(loadData,60000); loadData(); }
+    else if(timer){ clearInterval(timer); timer=null; }
+  };
+
+  function pillEstado(estado){
+    const e = (estado||'').toLowerCase();
+    if (e==='en tiempo' || e==='a tiempo') return `<span class="pill ok">En tiempo</span>`;
+    if (e==='ventana') return `<span class="pill warn">Ventana</span>`;
+    if (e==='demorado') return `<span class="pill late">Demorado</span>`;
+    return `<span class="muted">—</span>`;
+  }
+
+  async function fetchJSONLatest(){
+    try{
+      const r = await fetch(JSON_URL,{cache:'no-store'});
+      return await r.json();
+    }catch(_){
+      // JSONP fallback por si hace falta CORS
+      return new Promise((resolve,reject)=>{
+        const cb='cb_'+Date.now();
+        window[cb]=(d)=>{ resolve(d); cleanup(); };
+        const s=document.createElement('script');
+        s.src=JSON_URL+(JSON_URL.includes('?')?'&':'?')+'callback='+cb+'&_='+Date.now();
+        s.onerror=(e)=>{ cleanup(); reject(e); };
+        document.body.appendChild(s);
+        function cleanup(){ delete window[cb]; s.remove(); }
+      });
+    }
+  }
+
+  async function loadData(){
+    const btn=document.getElementById('btn'); btn.disabled=true;
+    try{
+      const data = await fetchJSONLatest();
+      if(!data || data.ok===false) throw new Error(data && data.error || 'Sin datos');
+      renderAll(data);
+    }catch(e){
+      console.error(e);
+      document.getElementById('last').textContent='Error al cargar';
+      document.querySelector('#tblIng tbody').innerHTML='';
+      document.querySelector('#tblSal tbody').innerHTML='';
+      document.getElementById('docks').innerHTML='';
+    }finally{ btn.disabled=false; }
+  }
+
+  function renderAll(data){
+    const meta=data.meta||{};
+    document.getElementById('last').textContent = `Actualizado: ${meta.ts_ba||meta.ts_utc||''}`;
+
+    // Ingresos esperados (agregamos Vuelta, Tipo, Equipo)
+    const ing = Array.isArray(data.ingresos_esperados)?data.ingresos_esperados:[];
+    document.querySelector('#tblIng tbody').innerHTML =
+      ing.map(r=>`<tr>
+        <td>${r.hr||''}</td>
+        <td>${r.patente||''}</td>
+        <td>${r.turno||''}</td>
+        <td>${pillEstado(r.estado)}</td>
+        <td>${r.vuelta||''}</td>
+        <td>${r.tipo_viaje||''}</td>
+        <td>${r.tipo_equipo||''}</td>
+      </tr>`).join('') || `<tr><td colspan="7" class="muted">Sin datos</td></tr>`;
+
+    // Dársenas (orden: Presentado, Playa, Play2, Dock1, Dock2, Dock3, Alero, Carpa)
+    const dash = data.en_planta_dashboard || {};
+    const order = ['PRESENTADO','PLAYA','PLAY2','DOCK1','DOCK2','DOCK3','ALERO','CARPA'];
+    document.getElementById('docks').innerHTML = order.map(k=>{
+      const arr = dash[k] || [];
+      const list = arr.map(x=>{
+        const mins = (x.minutos_desde_evento ?? '') === '' ? '—' : `${x.minutos_desde_evento}m`;
+        const ev   = x.evento || '—';
+        return `<div class="chip"><b>${x.hr||''}</b><span class="sep">·</span>${x.patente||''}<span class="sep">·</span>${ev}<span class="sep">·</span>${mins}</div>`;
+      }).join('') || `<div class="muted">—</div>`;
+      const count = arr.length ? ` (${arr.length})` : '';
+      return `<div class="dock-col"><h4>${k}${count}</h4><div class="list">${list}</div></div>`;
+    }).join('');
+
+    // Salidas → ahora incluye Vuelta, Tipo, Equipo, Transporte (empresa)
+    // y oculta filas sin HR
+    const rows = (Array.isArray(data.salidas_rows)?data.salidas_rows:[])
+                  .filter(r=>String(r.hr||'').trim());
+    const movs = Array.isArray(data.salidas_movs)?data.salidas_movs:[];
+    const evByHr = buildSalidaEventIndex(movs);
+    document.querySelector('#tblSal tbody').innerHTML =
+      rows.map(r=>{
+        const hr = String(r.hr||'').trim();
+        const ev = evByHr[hr] || {};
+        return `<tr>
+          <td>${r.hr||''}</td>
+          <td>${r.patente||''}</td>
+          <td>${r.vuelta||''}</td>
+          <td>${r.tipo_viaje||''}</td>
+          <td>${r.tipo_equipo||''}</td>
+          <td>${r.empresa||''}</td>
+          <td>${r.ingreso||''}</td>
+          <td>${ev['Inicio de Carga']||''}</td>
+          <td>${ev['Fin de Carga']||''}</td>
+          <td>${ev['SALIDA']||''}</td>
+        </tr>`;
+      }).join('') || `<tr><td colspan="10" class="muted">Sin datos</td></tr>`;
+  }
+
+  // Indexa última hora de cada evento por HR (Inicio/Fin/SALIDA)
+  function buildSalidaEventIndex(movs){
+    const idx = {};
+    for(const m of movs){
+      const hr = String(m.hr||'').trim();
+      if(!hr) continue;
+      const ev = String(m.darsena||'').trim();
+      // Solo eventos que nos interesan:
+      if(!/^(Inicio de Carga|Fin de Carga|SALIDA)$/i.test(ev)) continue;
+      const evKey = ev.replace(/\s+/g,' ');
+      const last = (idx[hr] = idx[hr] || {});
+      // Guardamos la última hora (comparando HH:MM)
+      const prev = last[evKey];
+      if(!prev || hmToInt(m.fecha) >= hmToInt(prev)){ last[evKey] = m.fecha; }
+    }
+    return idx;
+  }
+  function hmToInt(txt){
+    const m = /(\d{1,2}):(\d{2})/.exec(txt||'');
+    if(!m) return -1;
+    return (+m[1])*60 + (+m[2]);
+  }
+
+  loadData();
+</script>
+</body>
+</html>
