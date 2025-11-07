@@ -208,7 +208,7 @@
     <div class="grow"></div>
     <button id="btn" class="btn">Actualizar</button>
     <button id="toggleTheme" class="btn" title="Alternar tema">Tema</button>
-    <label><input type="checkbox" id="auto"> Auto-refresh 60s</label>
+   <label><input type="checkbox" id="auto" checked> Auto-refresh 60s</label>
   </div>
 
   <div class="main-grid">
@@ -312,7 +312,12 @@
     if(e.target.checked){ timer=setInterval(loadData,60000); loadData(); }
     else if(timer){ clearInterval(timer); timer=null; }
   };
-
+(function initAutoRefresh(){
+  const chk = document.getElementById('auto');
+  if (chk && chk.checked){
+    timer = setInterval(loadData, 60000);
+  }
+})();
   async function fetchJSONLatest(){
     try{
       const r = await fetch(JSON_URL,{cache:'no-store'});
