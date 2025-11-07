@@ -28,35 +28,6 @@
       --rowb:#5c6777; --thead-bg:#e5edf7; --thead-b:#334155;
       --btn:#0ea5e9; --btn-ink:#ffffff; --badge-bg:#e7eef7; --badge-ink:#111827;
     }
-/* Título y contador GRANDES solo para "En planta" */
-.h3-planta{
-  font-size: clamp(36px, 3.8vw, 64px);     /* título grande */
-  gap: 16px;
-}
-#countPlanta{
-  font-size: clamp(28px, 3.2vw, 48px);     /* badge grande */
-  padding: 10px 16px;
-  border-width: 4px;
-}
-/* -- En planta: título y contador GRANDES (gana a .card h3) -- */
-.card > h3.h3-planta{
-  font-size: clamp(40px, 4.2vw, 68px) !important; /* título "En planta" */
-  gap: 18px;
-  line-height: 1.1;
-}
-.card > h3.h3-planta .h3-count#countPlanta{
-  font-size: clamp(30px, 3.4vw, 52px) !important; /* badge "0" de En planta */
-  padding: 12px 18px;
-  border-width: 4px;
-}
-
-/* (Opcional) reloj grande que ya tenés al lado de En planta */
-.card > h3.h3-planta .clock-big{
-  font-size: clamp(48px, 5.5vw, 96px) !important;
-  font-weight: 1000;
-  letter-spacing: .5px;
-}
-
 
     *{box-sizing:border-box}
     body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;margin:20px;background:var(--bg);color:var(--ink)}
@@ -73,9 +44,103 @@
     .card .body{padding:16px 18px}
 
     .table-wrap{overflow-x:auto}
-    table{width:100%;border-collapse:separate;border-spacing:0;font-size:var(--tbl-font);min-width:1280px}
+    table{
+      width:100%;
+      border-collapse:separate;border-spacing:0;
+      font-size:var(--tbl-font);
+      min-width:980px; /* ↓ más amigable en móvil */
+    }
     th,td{padding:16px 14px;border-bottom:var(--thick) solid var(--rowb);text-align:left;white-space:nowrap}
     th{background:var(--thead-bg);font-weight:1000;color:var(--ink);border-bottom:calc(var(--thick) + 1px) solid var(--thead-b);position:sticky; top:0; z-index:1}
+
+    /* ===== Layout mitad/mitad (50/50) con orden en mobile ===== */
+    .main-grid{
+      display:grid;
+      grid-template-areas: "table planta";
+      grid-template-columns: 1fr 1fr; /* 50/50 */
+      gap:20px; margin-top:20px;
+    }
+    .card-left  { grid-area: table; }
+    .card-right { grid-area: planta; }
+
+    /* En mobile: primero EN PLANTA, luego la tabla */
+    @media (max-width: 900px){
+      .main-grid{
+        grid-template-areas:
+          "planta"
+          "table";
+        grid-template-columns: 1fr;
+      }
+      :root{ --tbl-font: 18px; } /* opcional: reducir tipografía de tabla */
+    }
+
+    /* ===== EN PLANTA (derecha) ===== */
+    /* Columna 1 (combo PRESENTADO/PLAYA/PLAY2) más ancha */
+    .planta-grid{
+      display:grid;
+      grid-template-columns: minmax(520px, 30%) 1fr; /* 👈 combo ~55% */
+      gap:16px;
+    }
+    @media (max-width: 1200px){ .planta-grid{ grid-template-columns: 1fr; } }
+
+    .planta-rest{display:grid;grid-template-columns: repeat(2, minmax(320px,1fr));gap:16px}
+    @media (max-width: 700px){ .planta-rest{ grid-template-columns: 1fr; } }
+
+    .planta-col{background:var(--card);border:var(--thick) solid var(--card-b);border-radius:16px}
+    .planta-col h4{
+      margin:0;padding:14px 16px;border-bottom:var(--thick) solid var(--thead-b);
+      font-size:24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    }
+    /* Forzar 1 línea en el título del combo (ellipsis si no entra) */
+    .planta-col.combo h4{
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      gap: 18px;
+    }
+    .badge{font-size:20px;background:var(--badge-bg);color:var(--badge-ink);border-radius:999px;padding:6px 12px;font-weight:1000;border:3px solid var(--rowb)}
+    .planta-col .list{padding:12px 14px;min-height:64px}
+
+    /* ===== CHIP (globo) – MÁS GRANDE ===== */
+    .chip{
+      display:flex;flex-direction:column;align-items:flex-start;
+      background:var(--chip);border-radius:20px;
+      padding:22px 26px;                 /* ↑ padding */
+      font-size: clamp(22px, 2.1vw, 30px);/* ↑ texto principal */
+      margin:12px 0;gap:12px;
+      border:var(--thick) solid #00000022
+    }
+    .chip .line0{ font-size: clamp(18px, 1.6vw, 22px); font-weight:1000 }
+    .chip .line1{ display:flex; gap:14px; align-items:center; font-weight:1000; }
+    .chip .line2{ opacity:.98; font-weight:900; font-size: clamp(18px, 1.8vw, 22px); }
+    .chip .sep{ opacity:.7 }
+
+    /* Pastilla del evento más grande */
+.chip .line2 .stage-pill{
+  display:inline-flex;
+  align-items:center;
+  padding:10px 14px;
+  border-radius:16px;
+  border: 2px solid rgba(0,0,0,.18);
+
+  /* 👉 toma las variables y si faltan usa valores por defecto */
+  background-color: var(--stage-bg, #06b6d4) !important;
+  color:           var(--stage-ink, #05202a) !important;
+
+  animation: blinkSync 1.25s ease-in-out infinite;
+}
+
+    /* Cronómetro del globo un poco más grande */
+    .ago-badge{
+      display:inline-flex; align-items:center;
+      padding:8px 12px; border-radius:14px;
+      margin-left:.6ch; font-variant-numeric: tabular-nums;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: rgba(255,255,255,.12); color: var(--ink); border: 1px solid rgba(0,0,0,.25);
+      font-size: clamp(14px, 1.5vw, 20px);
+    }
+    .ago-badge.overdue{ background:#ef4444 !important; color:#ffffff !important; border-color:#7f1d1d !important; }
 
     /* --- Fila EN PLANTA por dársena (genérico) --- */
     tr.dock-row td{
@@ -83,7 +148,6 @@
       color:var(--dock-ink) !important;
       border-color:rgba(0,0,0,.22);
     }
-
     /* --- OVERRIDE: Situación en EN PLANTA usa color de ETAPA --- */
     tr.dock-row td.stage-situ{
       background:var(--stage-bg) !important;
@@ -92,104 +156,55 @@
       animation: blinkSync 1.25s ease-in-out infinite;
     }
 
-    /* Ocultar la línea 0 en dársenas normales */
-    .chip .line0{ display:none; }
-    /* Mostrarla solo en PRESENTADO, PLAYA y PLAY2 */
-   
-   
-
-    /* ===== Situación (Ingresos/Salidas) por estado ===== */
+    /* Situación (Ingresos/Salidas) por estado */
     td.td-situ{font-weight:1000;text-align:center;border:var(--thick) solid var(--rowb);border-radius:12px}
     td.situ-ok   {background:#22c55e;color:#06140b;border-color:#14532d}
     td.situ-late {background:#ef4444;color:#3b0a0a;border-color:#7f1d1d}
     td.situ-info {background:#60a5fa;color:#0b214a;border-color:#1e40af}
     td.situ-neut {background:#cbd5e1;color:#0b1220;border-color:#64748b}
 
-    /* Animación sincronizada (blink) solo para etapa */
+    /* Animación sincronizada (blink) */
     @keyframes blinkSync {
       0%,100% { filter: brightness(0.96); box-shadow: 0 0 0 rgba(255,255,255,0); }
       50%     { filter: brightness(1.22); box-shadow: 0 0 12px rgba(255,255,255,0.18); }
     }
 
-    /* Pill del NOMBRE del evento (no cambia a rojo) */
-    .chip .line2 .stage-pill{
-      display:inline-flex;
-      align-items:center;
-      padding:8px 12px;
-      border-radius:14px;
-      background: var(--stage-bg) !important;
-      color: var(--stage-ink) !important;
-      border: 2px solid rgba(0,0,0,.18);
-      animation: blinkSync 1.25s ease-in-out infinite;
+    /* En planta: título y contador GRANDES */
+    .h3-planta{ font-size: clamp(36px, 3.8vw, 64px); gap: 16px; }
+    #countPlanta{ font-size: clamp(28px, 3.2vw, 48px); padding: 10px 16px; border-width: 4px; }
+    .card > h3.h3-planta{ font-size: clamp(40px, 4.2vw, 68px) !important; gap: 18px; line-height: 1.1; }
+    .card > h3.h3-planta .h3-count#countPlanta{
+      font-size: clamp(30px, 3.4vw, 52px) !important; padding: 12px 18px; border-width: 4px;
     }
-/* Reloj grande al final del título "En planta" */
-.clock-big{
-  margin-left: auto;
-  font-size: clamp(48px, 5.5vw, 96px); /* más grande y responsive */
-  font-weight: 1000;
-  line-height: .95;
-  letter-spacing: .02em;
-  font-variant-numeric: tabular-nums;
-  opacity: .98;
 
-  /* Mejora de contraste para TV */
-  text-shadow:
-    0 2px 0 rgba(0,0,0,.25),
-    0 4px 12px rgba(0,0,0,.25);
-}
-.light .clock-big{
-  text-shadow:
-    0 2px 0 rgba(0,0,0,.35),
-    0 6px 16px rgba(0,0,0,.35);
-}
+    /* “Actualizado” pequeño entre En planta y el reloj */
+    .last-mini{
+      font-size: clamp(14px, 1.4vw, 20px);
+      color: var(--muted);
+      font-weight: 700;
+      margin-left: 8px;
+      white-space: nowrap;
+      align-self: center;
+    }
 
-    /* Hora en badge aparte (sí cambia a rojo) */
-    .ago-badge{
-      display:inline-flex;
-      align-items:center;
-      padding:6px 10px;
-      border-radius:12px;
-      margin-left:.5ch;
+    /* Reloj grande */
+    .card > h3.h3-planta .clock-big{
+      font-size: clamp(48px, 5.5vw, 96px) !important;
+      font-weight: 1000;
+      letter-spacing: .5px;
+      margin-left: auto;
+      line-height: .95;
       font-variant-numeric: tabular-nums;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      background: rgba(255,255,255,.12);
-      color: var(--ink);
-      border: 1px solid rgba(0,0,0,.25);
+      text-shadow: 0 2px 0 rgba(0,0,0,.25), 0 4px 12px rgba(0,0,0,.25);
     }
-    .ago-badge.overdue{
-      background:#ef4444 !important;
-      color:#ffffff !important;
-      border-color:#7f1d1d !important;
-    }
-
-    /* ===== Layout mitad/mitad ===== */
-    .main-grid{display:grid;grid-template-columns: 1fr 1fr;gap:20px;margin-top:20px}
-    @media (max-width: 1200px){ .main-grid{ grid-template-columns: 1fr; } }
-
-    /* ===== EN PLANTA (derecha) ===== */
-    .planta-grid{display:grid;grid-template-columns: 420px 1fr;gap:16px}
-    @media (max-width: 1000px){ .planta-grid{ grid-template-columns: 1fr; } }
-
-    .planta-rest{display:grid;grid-template-columns: repeat(2, minmax(280px,1fr));gap:16px}
-    @media (max-width: 700px){ .planta-rest{ grid-template-columns: 1fr; } }
-
-    .planta-col{background:var(--card);border:var(--thick) solid var(--card-b);border-radius:16px}
-    .planta-col h4{margin:0;padding:14px 16px;border-bottom:var(--thick) solid var(--thead-b);font-size:24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-    .badge{font-size:20px;background:var(--badge-bg);color:var(--badge-ink);border-radius:999px;padding:6px 12px;font-weight:1000;border:3px solid var(--rowb)}
-    .planta-col .list{padding:12px 14px;min-height:64px}
-
-    /* ===== CHIP (globo) ===== */
-    .chip{display:flex;flex-direction:column;align-items:flex-start;background:var(--chip);border-radius:18px;padding:14px 18px;font-size:22px;margin:10px 0;gap:8px;border:var(--thick) solid #00000022}
-    .chip .line0{font-size:18px;font-weight:1000}
-    .chip .line1{display:flex;gap:12px;align-items:center;font-weight:1000}
-    .chip .line2{opacity:.95;font-weight:900}
-    .chip .sep{opacity:.7}
+    .light .clock-big{ text-shadow: 0 2px 0 rgba(0,0,0,.35), 0 6px 16px rgba(0,0,0,.35); }
   </style>
 </head>
 <body>
+  <!-- HEADER -->
   <div class="header">
     <h2 style="margin:0;font-size:34px">Playa & Cargas</h2>
-    <div id="last" class="muted">Actualizando…</div>
+    <div id="last" class="muted" style="display: none;">Actualizando…</div>
     <div class="grow"></div>
     <button id="btn" class="btn">Actualizar</button>
     <button id="toggleTheme" class="btn" title="Alternar tema">Tema</button>
@@ -198,7 +213,7 @@
 
   <div class="main-grid">
     <!-- IZQUIERDA: Tabla única -->
-    <div class="card">
+    <div class="card card-left">
       <h3>
         Ingresos esperados <span id="countIng" class="h3-count">0</span>,
         En planta <span id="countPlantaMini" class="h3-count">0</span>
@@ -219,11 +234,13 @@
     </div>
 
     <!-- DERECHA: En planta (chips) -->
-<div class="card">
-  <h3>En planta <span id="countPlanta" class="h3-count">0</span>
-      <span id="clockPlanta" class="clock-big">00:00:00</span>
-  </h3>
-  <div class="body">
+    <div class="card card-right">
+      <h3 class="h3-planta">
+        En planta <span id="countPlanta" class="h3-count">0</span>
+        <span id="lastMini" class="last-mini">Actualizando…</span>
+        <span id="clockPlanta" class="clock-big">00:00:00</span>
+      </h3>
+      <div class="body">
         <div class="planta-grid">
           <!-- globo combinado primero -->
           <div id="plantaCombo" class="planta-col combo">
@@ -273,30 +290,24 @@
     localStorage.setItem('themeLight', light ? '1' : '0');
   };
 
-    let clockTimer = null;
-
+  let clockTimer = null;
   function startClockPlanta(){
     if (clockTimer){ clearInterval(clockTimer); }
     const el = document.getElementById('clockPlanta');
     if (!el) return;
-
     const tz = 'America/Argentina/Buenos_Aires';
     const opts = { hour12:false, hour:'2-digit', minute:'2-digit', second:'2-digit', timeZone: tz };
-
     const tick = ()=>{
-      try{
-        el.textContent = new Date().toLocaleTimeString('es-AR', opts);
-      }catch(_){
-        // fallback manual si algo raro pasa
-        const now = new Date();
-        const pad = n => String(n).padStart(2,'0');
+      try{ el.textContent = new Date().toLocaleTimeString('es-AR', opts); }
+      catch(_){
+        const now = new Date(); const pad = n => String(n).padStart(2,'0');
         el.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
       }
     };
-
-    tick(); // primera pintura
+    tick();
     clockTimer = setInterval(tick, 1000);
   }
+
   document.getElementById('auto').onchange = e=>{
     if(e.target.checked){ timer=setInterval(loadData,60000); loadData(); }
     else if(timer){ clearInterval(timer); timer=null; }
@@ -328,6 +339,7 @@
     }catch(e){
       console.error(e);
       document.getElementById('last').textContent='Error al cargar';
+      document.getElementById('lastMini').textContent='Error al cargar';
       ['countIng','countSal','countPlanta','countPlantaMini'].forEach(id=>document.getElementById(id).textContent='0');
       document.querySelector('#tblMix tbody').innerHTML='';
       document.getElementById('plantaRest').innerHTML='';
@@ -341,7 +353,9 @@
 
   function renderAll(data){
     const meta=data.meta||{};
-    document.getElementById('last').textContent = `Actualizado: ${meta.ts_ba||meta.ts_utc||''}`;
+    const ts = meta.ts_ba||meta.ts_utc||'';
+    document.getElementById('last').textContent     = `Actualizado: ${ts}`;
+    document.getElementById('lastMini').textContent = `Actualizado: ${ts}`;
     renderPlanta(data);
     renderTablaUnica(data);
   }
@@ -380,7 +394,6 @@
     return idx;
   }
   function buildLastEventPlanta(movs){
-    // Devuelve { [hr]: { name: '...', time: 'HH:MM' } }
     const idx = {};
     for(const m of movs){
       const hr = String(m.hr||'').trim(); if(!hr) continue;
@@ -525,7 +538,7 @@
       }
       return `
         <div class="chip" data-zona="${zona}" style="background:${colDock.bg};color:${colDock.ink};border-color:${colDock.bg}">
-          <div class="line0"><b>${zona||''}</b></div>
+      
           <div class="line1"><b>${hr||''}</b><span class="sep">·</span>${patente||''}${eq?`<span class="sep">·</span>${eq}`:''}</div>
           <div class="line2">${line2}</div>
         </div>`;
@@ -557,68 +570,45 @@
     }).join('');
     document.getElementById('plantaRest').innerHTML = restHTML;
 
-    // (Re)iniciar contadores en vivo
     setupLiveAgoCounters();
   }
 
   /* ====== Contadores HH:MM:SS en vivo para globos ====== */
-let agoTimer = null;
-function setupLiveAgoCounters(){
-  if (agoTimer){ clearInterval(agoTimer); agoTimer=null; }
+  let agoTimer = null;
+  function setupLiveAgoCounters(){
+    if (agoTimer){ clearInterval(agoTimer); agoTimer=null; }
+    const pad = (n)=> (n<10?'0':'')+n;
 
-  const pad = (n)=> (n<10?'0':'')+n;
+    const EXCLUDE = new Set(['PRESENTADO','PLAYA','PLAY2']);
+    const DOCK_ZONES = new Set(['DOCK1','DOCK2','DOCK3','ALERO','CARPA']);
+    const isDock = (zona)=> DOCK_ZONES.has(String(zona||'').toUpperCase());
+    const nodes = Array.from(document.querySelectorAll('.live-ago'));
 
-  // Excluir estos “no-dock” del rojo
-  const EXCLUDE = new Set(['PRESENTADO','PLAYA','PLAY2']);
-  // Lista explícita de dársenas
-  const DOCK_ZONES = new Set(['DOCK1','DOCK2','DOCK3','ALERO','CARPA']);
-  const isDock = (zona)=> DOCK_ZONES.has(String(zona||'').toUpperCase());
+    const tick = ()=>{
+      const now = Date.now();
+      for (const el of nodes){
+        const start = Number(el.dataset.start||0);
+        const stage = Number(el.dataset.stage||0);
+        const zona  = String(el.dataset.zone||'');
+        const zonaUP = zona.toUpperCase();
 
-  const nodes = Array.from(document.querySelectorAll('.live-ago'));
+        if (!start){ el.textContent = '00:00:00'; el.classList.remove('overdue'); continue; }
 
-  const tick = ()=>{
-    const now = Date.now();
-    for (const el of nodes){
-      const start = Number(el.dataset.start||0);
-      const stage = Number(el.dataset.stage||0);   // 0/1/2/3
-      const zona  = String(el.dataset.zone||'');   // DOCK1/..., PLAYA, etc.
-      const zonaUP = zona.toUpperCase();
+        let diff = Math.max(0, Math.floor((now - start)/1000));
+        const h = Math.floor(diff/3600); diff -= h*3600;
+        const m = Math.floor(diff/60);
+        const s = diff - m*60;
+        el.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
 
-      if (!start){
-        el.textContent = '00:00:00';
-        el.classList.remove('overdue');
-        continue;
+        const overHour = (now - start) >= 3600*1000;
+        const dock     = isDock(zonaUP);
+        const shouldRed = !EXCLUDE.has(zonaUP) && overHour && (dock || stage>0);
+        if (shouldRed){ el.classList.add('overdue'); } else { el.classList.remove('overdue'); }
       }
-
-      let diff = Math.max(0, Math.floor((now - start)/1000));
-      const h = Math.floor(diff/3600); diff -= h*3600;
-      const m = Math.floor(diff/60);
-      const s = diff - m*60;
-      el.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
-
-      const overHour = (now - start) >= 3600*1000;
-      const dock     = isDock(zonaUP);
-
-      // NUEVA REGLA:
-      // - Si está en DOCK y pasó 1h -> rojo (aunque stage=0)
-      // - O si es etapa (stage>0) y pasó 1h -> rojo
-      // - Nunca en PRESENTADO/PLAYA/PLAY2
-      const shouldRed = !EXCLUDE.has(zonaUP) && overHour && (dock || stage>0);
-
-      if (shouldRed){
-        el.classList.add('overdue');
-      }else{
-        el.classList.remove('overdue');
-      }
-    }
-  };
-
-  tick();
-  agoTimer = setInterval(tick, 1000);
-}
-
-
-
+    };
+    tick();
+    agoTimer = setInterval(tick, 1000);
+  }
 
   /* Utils */
   function pad(n){ return (n<10?'0':'')+n; }
@@ -635,32 +625,27 @@ function setupLiveAgoCounters(){
   function hhmmToEpoch(hhmm){
     const m = /(\d{1,2}):(\d{2})/.exec(hhmm||'');
     const now = new Date();
-    if (!m){
-      return now.getTime();
-    }
+    if (!m){ return now.getTime(); }
     const d = new Date(now.getFullYear(), now.getMonth(), now.getDate(), +m[1], +m[2], 0, 0);
     if (d.getTime() > now.getTime()) d.setDate(d.getDate()-1); // si quedó a futuro, fue ayer
     return d.getTime();
   }
-document.addEventListener('DOMContentLoaded', () => {
-  const badge = document.getElementById('countPlanta');
-  if (!badge) return;
-  const h3 = badge.closest('h3');
-  if (h3) h3.classList.add('h3-planta');
-});
 
-  // Preferencia tema
+  // Inicializaciones
+  document.addEventListener('DOMContentLoaded', () => {
+    const badge = document.getElementById('countPlanta');
+    if (badge){
+      const h3 = badge.closest('h3');
+      if (h3) h3.classList.add('h3-planta');
+    }
+  });
+
   (function initTheme(){
     const light = localStorage.getItem('themeLight') === '1';
     if (light) document.body.classList.add('light');
   })();
-  (function boostPlantaHeader(){
-  const badge = document.getElementById('countPlanta');
-  if(!badge) return;
-  const h3 = badge.parentElement;  // el <h3> que contiene el contador
-  if(h3) h3.classList.add('h3-planta');
-})();
-startClockPlanta();
+
+  startClockPlanta();
   loadData();
 </script>
 </body>
