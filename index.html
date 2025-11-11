@@ -57,13 +57,14 @@
     th,td{padding:16px 14px;border-bottom:var(--thick) solid var(--rowb);text-align:left;white-space:nowrap}
     th{background:var(--thead-bg);font-weight:1000;color:var(--ink);border-bottom:calc(var(--thick) + 1px) solid var(--thead-b);position:sticky; top:0; z-index:1}
 
-    /* ===== Layout mitad/mitad (50/50) con orden en mobile ===== */
-    .main-grid{
-      display:grid;
-      grid-template-areas: "table planta";
-      grid-template-columns: 1fr 1fr; /* 50/50 */
-      gap:20px; margin-top:20px;
-    }
+  /* ===== Layout mitad/mitad (50/50) con orden en mobile ===== */
+.main-grid{
+  display:grid;
+  grid-template-areas: "table planta";
+  /* ANTES: grid-template-columns: 1fr 1fr;  50/50 */
+  grid-template-columns: 48% 52%; /* AHORA: 40% izquierda / 60% derecha */
+  gap:20px; margin-top:20px;
+}
     .card-left  { grid-area: table; }
     .card-right { grid-area: planta; }
 
@@ -199,6 +200,54 @@
       text-shadow: 0 2px 0 rgba(0,0,0,.25), 0 4px 12px rgba(0,0,0,.25);
     }
     .light .clock-big{ text-shadow: 0 2px 0 rgba(0,0,0,.35), 0 6px 16px rgba(0,0,0,.35); }
+
+    /* Situación – tonos suaves SOLO para Salidas */
+.sal-row .td-situ{
+  font-weight:1000;
+  text-align:center;
+  border:var(--thick) solid var(--rowb);
+  border-radius:12px;
+}
+
+/* Verde suave (A tiempo) – solo salidas */
+.sal-row .td-situ.situ-ok{
+  background:#d5f8e1;   /* verde pastel */
+  color:#065f46;        /* texto verde oscuro */
+  /* border-color:#34d399; /* borde verde medio */
+}
+
+/* Rojo suave (Demorado) – solo salidas */
+.sal-row .td-situ.situ-late{
+    background:#e5d1d1;   /* rojo pastel */
+  color:#7f1d1d;        /* texto rojo oscuro */
+   /* border-color:#fecaca; /* borde rojo medio */
+}
+
+/* Informativo (Programado) – solo salidas */
+.sal-row .td-situ.situ-info{
+  background:#dbeafe;
+  color:#0b214a;
+  border-color:#93c5fd;
+}
+
+/* Neutro – solo salidas */
+.sal-row .td-situ.situ-neut{
+  background:#e2e8f0;
+  color:#0b1220;
+  border-color:#94a3b8;
+}
+/* Escala por transform (fallback) */
+body.scaled{
+  /* --appScale se setea desde JS (0.6 = 60%) */
+  transform: scale(var(--appScale, 0.6));
+  transform-origin: top left;
+  width: calc(100% / var(--appScale, 0.6));
+  height: calc(100% / var(--appScale, 0.6));
+}
+
+/* Opcional: evita scroll si algo se desborda por rounding */
+html, body{ overflow: hidden; }
+
   </style>
 </head>
 <body>
@@ -547,7 +596,7 @@
       const estadoCalc = calcEstadoCarga(horaCarga, presentado);
       const situTxt    = 'Despachado';
       const situCls    = situClassByEstado(estadoCalc || r.estado || '');
-      rowsHTML.push(`<tr>
+      rowsHTML.push(`<tr class="sal-row">
         <td>${r.hr||''}</td><td>${r.patente||''}</td><td>${horaCarga}</td><td><b>${estadoCalc||r.estado||''}</b></td>
         <td>${r.vuelta||''}</td><td>${r.tipo_viaje||''}</td><td>${r.tipo_equipo||''}</td><td>${r.tipo_zona||''}</td>
         <td>${transp}</td><td>${presentado}</td><td>${salida}</td>
@@ -708,7 +757,24 @@
     const light = localStorage.getItem('themeLight') === '1';
     if (light) document.body.classList.add('light');
   })();
+ // Fuerza zoom a p (0.6 = 60%). Usa 'zoom' si existe; si no, usa transform.
+  function forceZoom(p = 0.6){
+    try{
+      // Intento 1: propiedad 'zoom' nativa (Chromium/Tizen recientes)
+      if (window.CSS && CSS.supports && CSS.supports('zoom', String(p))){
+        document.body.style.zoom = p;            // 0.6
+        document.documentElement.style.zoom = p; // por si el body no basta
+        return;
+      }
+    }catch(_){/* ignore */}
 
+    // Fallback: escala por transform
+    document.documentElement.style.setProperty('--appScale', String(p));
+    document.body.classList.add('scaled');
+  }
+
+  // Llamalo al cargar la página:
+  document.addEventListener('DOMContentLoaded', ()=> forceZoom(0.6));
   startClockPlanta();
   loadData();
 </script>
