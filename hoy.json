@@ -272,6 +272,68 @@
   ],
   "en_planta_movs": [
     {
+      "hr": "201663",
+      "patente": "PEL371",
+      "darsena": "PRESENTADO",
+      "fecha": "10:52hs.",
+      "usuario": "PBueno"
+    },
+
+    {
+      "hr": "201853",
+      "patente": "AG111BB",
+      "darsena": "PRESENTADO",
+      "fecha": "10:52hs.",
+      "usuario": "PBueno"
+    },
+
+    {
+      "hr": "201863",
+      "patente": "AG222BB",
+      "darsena": "PRESENTADO",
+      "fecha": "10:52hs.",
+      "usuario": "PBueno"
+    },
+
+    {
+      "hr": "201873",
+      "patente": "AG333BB",
+      "darsena": "PRESENTADO",
+      "fecha": "10:52hs.",
+      "usuario": "PBueno"
+    },
+    {
+      "hr": "2016631",
+      "patente": "PEL371",
+      "darsena": "PLAYA",
+      "fecha": "10:52hs.",
+      "usuario": "PBueno"
+    },
+
+    {
+      "hr": "2018531",
+      "patente": "AG111BB",
+      "darsena": "PLAYA",
+      "fecha": "10:52hs.",
+      "usuario": "PBueno"
+    },
+
+    {
+      "hr": "2018631",
+      "patente": "AG222BB",
+      "darsena": "PLAYA",
+      "fecha": "10:52hs.",
+      "usuario": "PBueno"
+    },
+
+    {
+      "hr": "2018731",
+      "patente": "AG333BB",
+      "darsena": "PLAYA",
+      "fecha": "10:52hs.",
+      "usuario": "PBueno"
+    },
+    {
       "hr": "20168",
       "patente": "PHY290",
       "fecha": "10:52hs.",
