@@ -1,73 +1,82 @@
 {
   "ok": true,
   "meta": {
-    "ts_utc": "2026-02-06T13:20:56.480Z",
-    "ts_ba": "2026-02-06 10:20:56",
+    "ts_utc": "2026-02-06T14:30:39.823Z",
+    "ts_ba": "2026-02-06 11:30:39",
     "tz": "America/Argentina/Buenos_Aires",
     "tz_offset_rfc822": "-0300",
     "fecha_consulta": "06/02/2026",
     "fuente": "https://sli.applog.com.ar/"
   },
-  "ingresos_esperados": [],
-  "en_planta_rows": [
 
-    { "hr":"20260","patente":"AA111AA","darsenaActual":"PRESENTADO","tipoIngreso":"Carga / Descarga","empresa":"GREDAN","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Terceros","tipo_equipo":"SEMI","horariocarga":"11:00:00","tipo_zona":"ROSARIO"},
-    { "hr":"20261","patente":"AA222BB","darsenaActual":"PRESENTADO","tipoIngreso":"Carga / Descarga","empresa":"BIN PACK","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Coatings","tipo_equipo":"14TN","horariocarga":"11:00:00","tipo_zona":"CORDOBA"},
-    { "hr":"20262","patente":"AA333CC","darsenaActual":"PRESENTADO","tipoIngreso":"Carga / Descarga","empresa":"FERNANDEZ","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Decoratives","tipo_equipo":"SEMI","horariocarga":"11:00:00","tipo_zona":"MENDOZA"},
-    { "hr":"20263","patente":"AA444DD","darsenaActual":"PRESENTADO","tipoIngreso":"Carga / Descarga","empresa":"SLI","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Terceros","tipo_equipo":"SEMI","horariocarga":"11:00:00","tipo_zona":"SALTA"},
-    { "hr":"20264","patente":"AA555EE","darsenaActual":"PRESENTADO","tipoIngreso":"Carga / Descarga","empresa":"GREDAN","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Terceros","tipo_equipo":"14TN","horariocarga":"11:00:00","tipo_zona":"JUJUY"},
-    { "hr":"20265","patente":"AA666FF","darsenaActual":"PRESENTADO","tipoIngreso":"Carga / Descarga","empresa":"BIN PACK","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Decoratives","tipo_equipo":"SEMI","horariocarga":"11:00:00","tipo_zona":"NEUQUEN"},
-
-    { "hr":"20266","patente":"BB111AA","darsenaActual":"PLAYA","tipoIngreso":"Carga / Descarga","empresa":"SLI","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Terceros","tipo_equipo":"SEMI","horariocarga":"11:00:00","tipo_zona":"ROSARIO"},
-    { "hr":"20267","patente":"BB222BB","darsenaActual":"PLAYA","tipoIngreso":"Carga / Descarga","empresa":"GREDAN","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Coatings","tipo_equipo":"14TN","horariocarga":"11:00:00","tipo_zona":"BAHIA"},
-    { "hr":"20268","patente":"BB333CC","darsenaActual":"PLAYA","tipoIngreso":"Carga / Descarga","empresa":"FERNANDEZ","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Decoratives","tipo_equipo":"SEMI","horariocarga":"11:00:00","tipo_zona":"MAR DEL PLATA"},
-    { "hr":"20269","patente":"BB444DD","darsenaActual":"PLAYA","tipoIngreso":"Carga / Descarga","empresa":"SLI","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Terceros","tipo_equipo":"SEMI","horariocarga":"11:00:00","tipo_zona":"TUCUMAN"},
-    { "hr":"20270","patente":"BB555EE","darsenaActual":"PLAYA","tipoIngreso":"Carga / Descarga","empresa":"BIN PACK","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Coatings","tipo_equipo":"14TN","horariocarga":"11:00:00","tipo_zona":"SAN JUAN"},
-
-    { "hr":"20271","patente":"CC111AA","darsenaActual":"DOCK1","tipoIngreso":"Carga / Descarga","empresa":"GREDAN","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Decoratives","tipo_equipo":"SEMI","horariocarga":"11:00:00","tipo_zona":"CORDOBA"},
-    { "hr":"20272","patente":"CC222BB","darsenaActual":"DOCK2","tipoIngreso":"Carga / Descarga","empresa":"FERNANDEZ","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Terceros","tipo_equipo":"14TN","horariocarga":"11:00:00","tipo_zona":"ROSARIO"},
-    { "hr":"20273","patente":"CC333CC","darsenaActual":"DOCK3","tipoIngreso":"Carga / Descarga","empresa":"SLI","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Coatings","tipo_equipo":"SEMI","horariocarga":"11:00:00","tipo_zona":"MENDOZA"},
-
-    { "hr":"20274","patente":"DD111AA","darsenaActual":"ALERO","tipoIngreso":"Carga / Descarga","empresa":"GREDAN","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Terceros","tipo_equipo":"SEMI","horariocarga":"11:00:00","tipo_zona":"GREDAN"},
-    { "hr":"20275","patente":"DD222BB","darsenaActual":"CARPA","tipoIngreso":"Carga / Descarga","empresa":"SLI","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Decoratives","tipo_equipo":"14TN","horariocarga":"11:00:00","tipo_zona":"SUR"},
-    { "hr":"20276","patente":"DD333CC","darsenaActual":"PLAY2","tipoIngreso":"Carga / Descarga","empresa":"BIN PACK","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Terceros","tipo_equipo":"SEMI","horariocarga":"11:00:00","tipo_zona":"NORTE"},
-    { "hr":"20277","patente":"DD444DD","darsenaActual":"ALERO","tipoIngreso":"Carga / Descarga","empresa":"FERNANDEZ","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Coatings","tipo_equipo":"14TN","horariocarga":"11:00:00","tipo_zona":"OESTE"},
-    { "hr":"20278","patente":"DD555EE","darsenaActual":"CARPA","tipoIngreso":"Carga / Descarga","empresa":"SLI","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Decoratives","tipo_equipo":"SEMI","horariocarga":"11:00:00","tipo_zona":"ESTE"}
+  "ingresos_esperados": [
+    {"hr":"20253","patente":"AE412SB","turno":"11:30Hs.","estado":"En tiempo","minutos_al_turno":1,"empresa":"SLI","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Coatings","tipo_equipo":"8TN","horariocarga":"11:30:00","tipo_zona":"Coatings"},
+    {"hr":"20254","patente":"AE119PL","turno":"11:45Hs.","estado":"Programado","minutos_al_turno":12,"empresa":"BIN PACK","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Decoratives","tipo_equipo":"SEMI","horariocarga":"11:45:00","tipo_zona":"CORRIENTES"},
+    {"hr":"20255","patente":"AD889LK","turno":"12:00Hs.","estado":"Programado","minutos_al_turno":18,"empresa":"GREDAN","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Terceros","tipo_equipo":"SEMI","horariocarga":"12:00:00","tipo_zona":"GREDAN"},
+    {"hr":"20256","patente":"AC555QP","turno":"12:10Hs.","estado":"Programado","minutos_al_turno":22,"empresa":"FERNANDEZ","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Decoratives","tipo_equipo":"14TN","horariocarga":"12:10:00","tipo_zona":"MENDOZA"},
+    {"hr":"20257","patente":"AE902AZ","turno":"12:20Hs.","estado":"Programado","minutos_al_turno":30,"empresa":"SLI","estado_hr":"Pendiente","vuelta":"Segunda","tipo_viaje":"Shuttle","tipo_equipo":"SEMI DOBLE","horariocarga":"12:20:00","tipo_zona":"Shuttle"}
   ],
 
-  "en_planta_movs": [],
-  "salidas_rows": [],
-  "salidas_movs": [],
+  "en_planta_rows": [
+    {"hr":"20168","patente":"PHY290","darsenaActual":"DOCK1","tipoIngreso":"Carga / Descarga","empresa":"BAGUR","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Puerto","tipo_equipo":"4TN","horariocarga":"00:00:00","tipo_zona":""},
+
+    {"hr":"20178","patente":"NYJ228","darsenaActual":"DOCK2","tipoIngreso":"Carga / Descarga","empresa":"FERNANDEZ","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Decoratives","tipo_equipo":"SEMI","horariocarga":"16:00:00","tipo_zona":"COMODORO"},
+
+    {"hr":"20176","patente":"AE906YY","darsenaActual":"DOCK3","tipoIngreso":"Carga / Descarga","empresa":"SLI","estado_hr":"Pendiente","vuelta":"Segunda","tipo_viaje":"Decoratives","tipo_equipo":"SEMI","horariocarga":"15:00:00","tipo_zona":"ROSARIO"},
+
+    {"hr":"20180","patente":"AE339LK","darsenaActual":"ALERO","tipoIngreso":"Carga / Descarga","empresa":"GREDAN","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Terceros","tipo_equipo":"SEMI","horariocarga":"11:00:00","tipo_zona":"GREDAN"},
+
+    {"hr":"20177","patente":"AE322UX","darsenaActual":"CARPA","tipoIngreso":"Carga / Descarga","empresa":"FERNANDEZ","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Decoratives","tipo_equipo":"SEMI","horariocarga":"14:00:00","tipo_zona":"MENDOZA"},
+
+    {"hr":"20166","patente":"PEL371","darsenaActual":"PRESENTADO","tipoIngreso":"Carga / Descarga","empresa":"FERNANDEZ","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Shuttle","tipo_equipo":"SEMI DOBLE","horariocarga":"08:00:00","tipo_zona":"Shuttle"},
+
+    {"hr":"20181","patente":"AF111AA","darsenaActual":"PRESENTADO","tipoIngreso":"Carga / Descarga","empresa":"SLI","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Coatings","tipo_equipo":"8TN","horariocarga":"11:00:00","tipo_zona":"Coatings"},
+
+    {"hr":"20182","patente":"AF222BB","darsenaActual":"PRESENTADO","tipoIngreso":"Carga / Descarga","empresa":"BIN PACK","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Decoratives","tipo_equipo":"SEMI","horariocarga":"11:20:00","tipo_zona":"CORRIENTES"},
+
+    {"hr":"20183","patente":"AF333CC","darsenaActual":"PRESENTADO","tipoIngreso":"Carga / Descarga","empresa":"GREDAN","estado_hr":"Pendiente","vuelta":"Primera","tipo_viaje":"Terceros","tipo_equipo":"SEMI","horariocarga":"11:40:00","tipo_zona":"GREDAN"}
+  ],
+
+  "en_planta_movs": [
+    {"hr":"20168","patente":"PHY290","fecha":"11:22hs.","darsena":"DOCK1","usuario":"LAlfonso"},
+    {"hr":"20168","patente":"PHY290","fecha":"11:23hs.","darsena":"Inicio de Carga","usuario":"LAlfonso"},
+
+    {"hr":"20178","patente":"NYJ228","fecha":"11:22hs.","darsena":"DOCK2","usuario":"LAlfonso"},
+    {"hr":"20178","patente":"NYJ228","fecha":"11:23hs.","darsena":"Asignacion de Carga","usuario":"LAlfonso"},
+
+    {"hr":"20176","patente":"AE906YY","fecha":"11:22hs.","darsena":"DOCK3","usuario":"LAlfonso"},
+    {"hr":"20176","patente":"AE906YY","fecha":"11:23hs.","darsena":"Fin de Carga","usuario":"LAlfonso"},
+
+    {"hr":"20180","patente":"AE339LK","fecha":"11:00hs.","darsena":"ALERO","usuario":"PBueno"},
+    {"hr":"20180","patente":"AE339LK","fecha":"11:01hs.","darsena":"Asignacion de Carga","usuario":"PBueno"}
+  ],
+
+  "salidas_rows": [
+    {"hr":"20246","patente":"AC704LZ","ingreso":"2026-02-06 06:27:51","empresa":"FERNANDEZ","estado_hr":"En tránsito","vuelta":"Primera","tipo_viaje":"Coatings","tipo_equipo":"14TN","horariocarga":"06:00:00","tipo_zona":"Coatings"},
+    {"hr":"20250","patente":"AH409LQ","ingreso":"2026-02-06 07:39:42","empresa":"BIN PACK","estado_hr":"En tránsito","vuelta":"Segunda","tipo_viaje":"Decoratives","tipo_equipo":"SEMI","horariocarga":"20:01:00","tipo_zona":"CORRIENTES"},
+    {"hr":"20252","patente":"AD453WB","ingreso":"2026-02-06 10:16:59","empresa":"GREDAN","estado_hr":"Cerrada","vuelta":"Primera","tipo_viaje":"Terceros","tipo_equipo":"SEMI","horariocarga":"11:00:00","tipo_zona":"GREDAN"}
+  ],
+
+  "salidas_movs": [
+    {"hr":"20246","patente":"AC704LZ","fecha":"2026-02-06 06:28:04","darsena":"Asignacion de Carga","usuario":"Borrelli"},
+    {"hr":"20246","patente":"AC704LZ","fecha":"2026-02-06 06:35:56","darsena":"Inicio de Carga","usuario":"Borrelli"},
+    {"hr":"20246","patente":"AC704LZ","fecha":"2026-02-06 07:01:32","darsena":"Fin de Carga","usuario":"Borrelli"},
+    {"hr":"20246","patente":"AC704LZ","fecha":"2026-02-06 07:01:37","darsena":"SALIDA","usuario":"Borrelli"}
+  ],
 
   "en_planta_dashboard": {
-    "PRESENTADO": [
-      {"hr":"20260","patente":"AA111AA","evento":"","minutos_desde_evento":11},
-      {"hr":"20261","patente":"AA222BB","evento":"","minutos_desde_evento":14},
-      {"hr":"20262","patente":"AA333CC","evento":"","minutos_desde_evento":10},
-      {"hr":"20263","patente":"AA444DD","evento":"","minutos_desde_evento":13},
-      {"hr":"20264","patente":"AA555EE","evento":"","minutos_desde_evento":12},
-      {"hr":"20265","patente":"AA666FF","evento":"","minutos_desde_evento":15}
+    "PRESENTADO":[
+      {"hr":"20166","patente":"PEL371","evento":"","minutos_desde_evento":364},
+      {"hr":"20181","patente":"AF111AA","evento":"","minutos_desde_evento":20},
+      {"hr":"20182","patente":"AF222BB","evento":"","minutos_desde_evento":10},
+      {"hr":"20183","patente":"AF333CC","evento":"","minutos_desde_evento":5}
     ],
-    "DOCK1": [{"hr":"20271","patente":"CC111AA","evento":"Inicio de Carga","minutos_desde_evento":10}],
-    "DOCK2": [{"hr":"20272","patente":"CC222BB","evento":"Inicio de Carga","minutos_desde_evento":12}],
-    "DOCK3": [{"hr":"20273","patente":"CC333CC","evento":"Inicio de Carga","minutos_desde_evento":14}],
-    "PLAYA": [
-      {"hr":"20266","patente":"BB111AA","evento":"","minutos_desde_evento":15},
-      {"hr":"20267","patente":"BB222BB","evento":"","minutos_desde_evento":11},
-      {"hr":"20268","patente":"BB333CC","evento":"","minutos_desde_evento":13},
-      {"hr":"20269","patente":"BB444DD","evento":"","minutos_desde_evento":10},
-      {"hr":"20270","patente":"BB555EE","evento":"","minutos_desde_evento":14}
-    ],
-    "PLAY2": [{"hr":"20276","patente":"DD333CC","evento":"","minutos_desde_evento":12}],
-    "ALERO": [
-      {"hr":"20274","patente":"DD111AA","evento":"Asignacion de Carga","minutos_desde_evento":13},
-      {"hr":"20277","patente":"DD444DD","evento":"Asignacion de Carga","minutos_desde_evento":15}
-    ],
-    "CARPA": [
-      {"hr":"20275","patente":"DD222BB","evento":"Asignacion de Carga","minutos_desde_evento":11},
-      {"hr":"20278","patente":"DD555EE","evento":"Asignacion de Carga","minutos_desde_evento":14}
-    ]
-  },
-
-  "_planta_signature": "MOCK_DATA_20_CAMIONES"
+    "DOCK1":[{"hr":"20168","patente":"PHY290","evento":"Inicio de Carga","minutos_desde_evento":10}],
+    "DOCK2":[{"hr":"20178","patente":"NYJ228","evento":"Asignacion de Carga","minutos_desde_evento":8}],
+    "DOCK3":[{"hr":"20176","patente":"AE906YY","evento":"Fin de Carga","minutos_desde_evento":3}],
+    "PLAYA":[],
+    "PLAY2":[],
+    "ALERO":[{"hr":"20180","patente":"AE339LK","evento":"Asignacion de Carga","minutos_desde_evento":15}],
+    "CARPA":[{"hr":"20177","patente":"AE322UX","evento":"","minutos_desde_evento":30}]
+  }
 }
